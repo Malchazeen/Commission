@@ -47,7 +47,7 @@
                 commissionDetail.VAT_Rounding_profit = profit_from_VAT_rounding;
                 commissionDetail.VAT_Total_profit = profit_from_VAT_total;
 
-                document.getElementById("result").innerText = commissionDetail.Broker_fee + commissionDetail.SET_Trading_and_Regulatory_fee + commissionDetail.SET_Clearing_fee + commissionDetail.VAT;
+                document.getElementById("result").innerText = (commissionDetail.Broker_fee + commissionDetail.SET_Trading_and_Regulatory_fee + commissionDetail.SET_Clearing_fee + commissionDetail.VAT).toFixed(2);
             });
 		});
     </script>
