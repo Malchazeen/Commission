@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var submit = document.getElementById("submit");
+            submit.addEventListener("click", () => {
+                var amount = document.getElementById("input").value;
+
+                var Broker_fee = 0.1500 / 100;
+                var SET_Trading_fee = 0.0050 / 100;
+                var SET_Regulatory_fee = 0.0018 / 100;
+                var SET_Clearing_fee = 0.0010 / 100;
+                var VAT = 7.0000 / 100;
+
+                var to_Broker_fee = amount * Broker_fee;
+                var to_Broker_fee_actual = +to_Broker_fee.toFixed(2);
+                var profit_from_Broker_fee_rounding = to_Broker_fee - to_Broker_fee_actual;
+
+                var to_SET_Trading_and_Regulatory_fee = amount * (SET_Trading_fee + SET_Regulatory_fee);
+                var to_SET_Trading_and_Regulatory_fee_actual = +to_SET_Trading_and_Regulatory_fee.toFixed(2);
+                var profit_from_SET_Trading_and_Regulatory_fee_rounding = to_SET_Trading_and_Regulatory_fee - to_SET_Trading_and_Regulatory_fee_actual;
+
+                var to_SET_Clearing_fee = amount * SET_Clearing_fee;
+                var to_SET_Clearing_fee_actual = +to_SET_Clearing_fee.toFixed(2);
+                var profit_from_SET_Clearing_fee_rounding = to_SET_Clearing_fee - to_SET_Clearing_fee_actual;
+
+                var to_VAT_true = (to_Broker_fee + to_SET_Trading_and_Regulatory_fee + to_SET_Clearing_fee) * VAT;
+                var to_VAT_error = (to_Broker_fee_actual + to_SET_Trading_and_Regulatory_fee_actual + to_SET_Clearing_fee_actual) * VAT;
+                var to_VAT_actual = +to_VAT_error.toFixed(2);
+                var profit_from_VAT_Error = to_VAT_true - to_VAT_error;
+                var profit_from_VAT_rounding = to_VAT_error - to_VAT_actual;
+                var profit_from_VAT_total = to_VAT_true - to_VAT_actual;
+
+                var commissionDetail = new Object();
+                commissionDetail.Broker_fee = to_Broker_fee_actual;
+                commissionDetail.Broker_fee_profit = profit_from_Broker_fee_rounding;
+                commissionDetail.SET_Trading_and_Regulatory_fee = to_SET_Trading_and_Regulatory_fee_actual;
+                commissionDetail.SET_Trading_and_Regulatory_fee_profit = profit_from_SET_Trading_and_Regulatory_fee_rounding;
+                commissionDetail.SET_Clearing_fee = to_SET_Clearing_fee_actual;
+                commissionDetail.SET_Clearing_fee_profit = profit_from_SET_Clearing_fee_rounding;
+                commissionDetail.VAT = to_VAT_actual;
+                commissionDetail.VAT_Error_profit = profit_from_VAT_Error;
+                commissionDetail.VAT_Rounding_profit = profit_from_VAT_rounding;
+                commissionDetail.VAT_Total_profit = profit_from_VAT_total;
+
+                document.getElementById("result").innerText = commissionDetail.Broker_fee + commissionDetail.SET_Trading_and_Regulatory_fee + commissionDetail.SET_Clearing_fee + commissionDetail.VAT;
+            });
+		});
+    </script>
+</head>
+<body>
+    <input id="input" type="number" /><button id="submit">Calculate</button>
+    <p id="result"></p>
+</body>
+</html>
